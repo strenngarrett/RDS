@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: VPC for student garstr8331 in the US-West-2 region
+
+Resources:
+  StudentVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: VPC-garstr8331
+        - Key: StudentID
+          Value: garstr8331
+
+  RdsInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      VPCSecurityGroups:
+        - <SECURITY-GROUP-ID>
+      AllocatedStorage: '5'
+      DBInstanceClass: db.t3.micro
+      DBInstanceIdentifier: playground-db
+      Engine: MySQL
+      MasterUsername: Admin
+      MasterUserPassword: CloudAcademy123!
+
+Outputs:
+  VPCId:
+    Description: The ID of the created VPC
+    Value: !Ref StudentVPC
